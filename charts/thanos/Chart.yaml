@@ -2,9 +2,9 @@ apiVersion: v2
 dependencies:
 - name: thanos
   repository: https://charts.bitnami.com/bitnami
-  version: 15.6.0
+  version: 16.0.4
 - name: redis
   repository: https://charts.bitnami.com/bitnami
-  version: 19.5.0
+  version: 20.13.4
 name: thanos
-version: "0"
+version: 0

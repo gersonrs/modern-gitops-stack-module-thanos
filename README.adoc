@@ -1,6 +1,6 @@
 = modern-gitops-stack-module-thanos
 // Document attributes to replace along the document
-:thanos-chart-version: 15.6.0
+:thanos-chart-version: 15.14.1
 :original-repo-url: https://github.com/bitnami/charts/tree/master/bitnami/thanos
 
 A https://modern-gitops-stack.io[Modern Gitops Stack] module to deploy and configure https://thanos.io[Thanos].

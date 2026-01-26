@@ -11,6 +11,9 @@ locals {
   # Possible values available here -> https://github.com/bitnami/charts/tree/master/bitnami/thanos/
   helm_values = [{
     redis = {
+      image = {
+        repository = "bitnamilegacy/redis"
+      }
       architecture = "standalone"
       auth = {
         enabled  = true
@@ -27,6 +30,10 @@ locals {
       }
     }
     thanos = {
+
+      image = {
+        repository = "bitnamilegacy/thanos"
+      }
       metrics = {
         enabled = true
         serviceMonitor = {
@@ -153,25 +160,6 @@ locals {
           hostname    = ""
           extraRules = [
             {
-              host = "thanos-bucketweb.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}"
-              http = {
-                paths = [
-                  {
-                    backend = {
-                      service = {
-                        name = "thanos-bucketweb"
-                        port = {
-                          name = "proxy"
-                        }
-                      }
-                    }
-                    path     = "/"
-                    pathType = "ImplementationSpecific"
-                  }
-                ]
-              }
-            },
-            {
               host = "${local.thanos.bucketweb_domain}"
               http = {
                 paths = [
@@ -194,7 +182,6 @@ locals {
           extraTls = [{
             secretName = "thanos-bucketweb-tls"
             hosts = [
-              "thanos-bucketweb.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}",
               "${local.thanos.bucketweb_domain}"
             ]
           }]
@@ -287,25 +274,6 @@ locals {
           hostname    = ""
           extraRules = [
             {
-              host = "thanos-query.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}"
-              http = {
-                paths = [
-                  {
-                    backend = {
-                      service = {
-                        name = "thanos-query-frontend"
-                        port = {
-                          name = "proxy"
-                        }
-                      }
-                    }
-                    path     = "/"
-                    pathType = "ImplementationSpecific"
-                  }
-                ]
-              }
-            },
-            {
               host = "${local.thanos.query_domain}"
               http = {
                 paths = [
@@ -328,7 +296,6 @@ locals {
           extraTls = [{
             secretName = "thanos-query-tls"
             hosts = [
-              "thanos-query.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}",
               "${local.thanos.query_domain}"
             ]
           }]
@@ -351,8 +318,8 @@ locals {
   }]
 
   thanos_defaults = {
-    query_domain     = "thanos-query.${trimprefix("${var.subdomain}.${var.cluster_name}", ".")}.${var.base_domain}"
-    bucketweb_domain = "thanos-bucketweb.${trimprefix("${var.subdomain}.${var.cluster_name}", ".")}.${var.base_domain}"
+    query_domain     = "thanos-query.${var.subdomain != "" ? "${trimprefix(var.subdomain, ".")}." : ""}${var.base_domain}"
+    bucketweb_domain = "thanos-bucketweb.${var.subdomain != "" ? "${trimprefix(var.subdomain, ".")}." : ""}${var.base_domain}"
 
     # TODO Create proper Terraform variables for these values instead of bundling everything inside of these locals
 

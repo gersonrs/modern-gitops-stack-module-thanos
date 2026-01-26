@@ -11,6 +11,9 @@ locals {
   # Possible values available here -> https://github.com/bitnami/charts/tree/master/bitnami/thanos/
   helm_values = [{
     redis = {
+      image = {
+        repository = "bitnamilegacy/redis"
+      }
       architecture = "standalone"
       auth = {
         enabled  = true
@@ -27,6 +30,10 @@ locals {
       }
     }
     thanos = {
+
+      image = {
+        repository = "bitnamilegacy/thanos"
+      }
       metrics = {
         enabled = true
         serviceMonitor = {

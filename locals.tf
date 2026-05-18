@@ -131,7 +131,7 @@ locals {
             "--cookie-secret=${replace(random_password.oauth2_cookie_secret.result, "\"", "\\\"")}",
             "--email-domain=*",
             "--redirect-url=https://${local.thanos.bucketweb_domain}/oauth2/callback",
-          ], local.thanos.oidc.oauth2_proxy_extra_args)
+          ], local.thanos.oidc.oauth2_proxy_extra_args, [for g in var.allowed_groups : "--allowed-group=${g}"])
           image = local.oauth2_proxy_image
           name  = "thanos-proxy"
           ports = [{
@@ -215,7 +215,7 @@ locals {
             "--cookie-secret=${replace(random_password.oauth2_cookie_secret.result, "\"", "\\\"")}",
             "--email-domain=*",
             "--redirect-url=https://${local.thanos.query_domain}/oauth2/callback",
-          ], local.thanos.oidc.oauth2_proxy_extra_args)
+          ], local.thanos.oidc.oauth2_proxy_extra_args, [for g in var.allowed_groups : "--allowed-group=${g}"])
           image = local.oauth2_proxy_image
           name  = "thanos-proxy"
           ports = [{

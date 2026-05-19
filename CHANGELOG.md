@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.8.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.7.0...v2.8.0) (2026-05-19)
+
+
+### 🚀 New Features
+
+* add allowed_groups for RBAC via oauth2-proxy ([667cf62](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/667cf62a1f8f44d817eeeee44254b7a944519057))
+* migrate ingress from Traefik to Istio Gateway API HTTPRoute ([589e9bc](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/589e9bc1d54eaad4384bc3a49aed926ad91c4dd9))
+* migrate to Istio HTTPRoute and add allowed_groups RBAC ([96c7577](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/96c7577607d47cfde6d1318576e04f335c9ef7d4))
+
+
+### 📚 Documentation
+
+* improve allowed_groups variable description ([503ace2](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/503ace2c875e9f610d8a1cb401b53563d4e84cfd))
+
 ## [2.7.0](https://github.com/GersonRS/modern-gitops-stack-module-thanos/compare/v2.6.2...v2.7.0) (2026-01-26)
 
 

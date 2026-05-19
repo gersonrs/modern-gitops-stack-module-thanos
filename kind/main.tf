@@ -18,5 +18,7 @@ module "thanos" {
 
   thanos = var.thanos
 
+  allowed_groups = var.allowed_groups
+
   helm_values = concat(local.helm_values, var.helm_values)
 }

@@ -41,7 +41,7 @@ resource "random_password" "oauth2_cookie_secret" {
 }
 
 data "utils_deep_merge_yaml" "values" {
-  input       = [for i in concat(local.helm_values, var.helm_values) : yamlencode(i)]
+  input       = [for i in concat(local.helm_values, local.helm_values_httproutes, var.helm_values) : yamlencode(i)]
   append_list = var.deep_merge_append_list
 }
 

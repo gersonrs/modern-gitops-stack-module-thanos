@@ -188,7 +188,7 @@ variable "gateway_namespace" {
 }
 
 variable "allowed_groups" {
-  description = "List of Keycloak groups allowed to access Thanos. When empty, any authenticated user is allowed."
+  description = "List of Keycloak groups allowed to access Thanos (e.g. [\"modern-gitops-stack-admins\"]). When empty, any authenticated user is allowed."
   type        = list(string)
   default     = []
 }

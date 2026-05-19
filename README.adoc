@@ -36,13 +36,13 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- [[provider_null]] <<provider_null,null>> (>= 3)
+- [[provider_argocd]] <<provider_argocd,argocd>> (>= 6)
 
 - [[provider_random]] <<provider_random,random>> (>= 3)
 
-- [[provider_argocd]] <<provider_argocd,argocd>> (>= 6)
-
 - [[provider_utils]] <<provider_utils,utils>> (>= 1)
+
+- [[provider_null]] <<provider_null,null>> (>= 3)
 
 === Resources
 
@@ -114,7 +114,7 @@ Description: Override of target revision of the application chart.
 
 Type: `string`
 
-Default: `"v2.7.0"`
+Default: `"v2.8.0"`
 
 ==== [[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
 
@@ -270,6 +270,30 @@ Type: `bool`
 
 Default: `false`
 
+==== [[input_gateway_name]] <<input_gateway_name,gateway_name>>
+
+Description: Name of the Istio Gateway resource to attach HTTPRoutes to.
+
+Type: `string`
+
+Default: `"istio-gateway"`
+
+==== [[input_gateway_namespace]] <<input_gateway_namespace,gateway_namespace>>
+
+Description: Namespace where the Istio Gateway resource is deployed.
+
+Type: `string`
+
+Default: `"istio-ingress"`
+
+==== [[input_allowed_groups]] <<input_allowed_groups,allowed_groups>>
+
+Description: List of Keycloak groups allowed to access Thanos (e.g. ["modern-gitops-stack-admins"]). When empty, any authenticated user is allowed.
+
+Type: `list(string)`
+
+Default: `[]`
+
 === Outputs
 
 The following outputs are exported:
@@ -301,10 +325,10 @@ Description: ID to pass other modules in order to refer to this module as a depe
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_random]] <<provider_random,random>> |>= 3
-|[[provider_utils]] <<provider_utils,utils>> |>= 1
-|[[provider_argocd]] <<provider_argocd,argocd>> |>= 6
 |[[provider_null]] <<provider_null,null>> |>= 3
+|[[provider_random]] <<provider_random,random>> |>= 3
+|[[provider_argocd]] <<provider_argocd,argocd>> |>= 6
+|[[provider_utils]] <<provider_utils,utils>> |>= 1
 |===
 
 = Resources
@@ -365,7 +389,7 @@ Description: ID to pass other modules in order to refer to this module as a depe
 |[[input_target_revision]] <<input_target_revision,target_revision>>
 |Override of target revision of the application chart.
 |`string`
-|`"v2.7.0"`
+|`"v2.8.0"`
 |no
 
 |[[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
@@ -511,6 +535,24 @@ object({
 |Boolean to enable the deployment of a service monitor for Prometheus. This also enables the deployment of default Prometheus rules and Grafana dashboards, which are embedded inside the chart templates and are taken from the official Thanos examples, available https://github.com/thanos-io/thanos/blob/main/examples/alerts/alerts.yaml[here].
 |`bool`
 |`false`
+|no
+
+|[[input_gateway_name]] <<input_gateway_name,gateway_name>>
+|Name of the Istio Gateway resource to attach HTTPRoutes to.
+|`string`
+|`"istio-gateway"`
+|no
+
+|[[input_gateway_namespace]] <<input_gateway_namespace,gateway_namespace>>
+|Namespace where the Istio Gateway resource is deployed.
+|`string`
+|`"istio-ingress"`
+|no
+
+|[[input_allowed_groups]] <<input_allowed_groups,allowed_groups>>
+|List of Keycloak groups allowed to access Thanos (e.g. ["modern-gitops-stack-admins"]). When empty, any authenticated user is allowed.
+|`list(string)`
+|`[]`
 |no
 
 |===

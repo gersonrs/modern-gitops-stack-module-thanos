@@ -36,13 +36,13 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- [[provider_argocd]] <<provider_argocd,argocd>> (>= 6)
+- [[provider_null]] <<provider_null,null>> (>= 3)
 
 - [[provider_random]] <<provider_random,random>> (>= 3)
 
-- [[provider_utils]] <<provider_utils,utils>> (>= 1)
+- [[provider_argocd]] <<provider_argocd,argocd>> (>= 6)
 
-- [[provider_null]] <<provider_null,null>> (>= 3)
+- [[provider_utils]] <<provider_utils,utils>> (>= 1)
 
 === Resources
 
@@ -114,7 +114,7 @@ Description: Override of target revision of the application chart.
 
 Type: `string`
 
-Default: `"v2.8.0"`
+Default: `"v2.9.0"`
 
 ==== [[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
 
@@ -171,6 +171,20 @@ Description: IDs of the other modules on which this module depends on.
 Type: `map(string)`
 
 Default: `{}`
+
+==== [[input_namespace_labels]] <<input_namespace_labels,namespace_labels>>
+
+Description: Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true).
+
+Type: `map(string)`
+
+Default:
+[source,json]
+----
+{
+  "istio.io/dataplane-mode": "ambient"
+}
+----
 
 ==== [[input_thanos]] <<input_thanos,thanos>>
 
@@ -389,7 +403,7 @@ Description: ID to pass other modules in order to refer to this module as a depe
 |[[input_target_revision]] <<input_target_revision,target_revision>>
 |Override of target revision of the application chart.
 |`string`
-|`"v2.8.0"`
+|`"v2.9.0"`
 |no
 
 |[[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
@@ -440,6 +454,20 @@ object({
 |IDs of the other modules on which this module depends on.
 |`map(string)`
 |`{}`
+|no
+
+|[[input_namespace_labels]] <<input_namespace_labels,namespace_labels>>
+|Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true).
+|`map(string)`
+|
+
+[source]
+----
+{
+  "istio.io/dataplane-mode": "ambient"
+}
+----
+
 |no
 
 |[[input_thanos]] <<input_thanos,thanos>>

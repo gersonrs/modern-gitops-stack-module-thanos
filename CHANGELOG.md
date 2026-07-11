@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.9.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.8.0...v2.9.0) (2026-07-11)
+
+
+### 🚀 New Features
+
+* add namespace_labels variable to all modules ([f0a3279](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/f0a3279d661d5a0bd3818549aee83349c4cd26ee))
+* add namespace_labels variable to all modules ([9d5344f](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/9d5344f1b39872273a216ddee404f904706cf523))
+
 ## [2.8.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.7.0...v2.8.0) (2026-05-19)
 
 

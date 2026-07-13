@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.10.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.9.0...v2.10.0) (2026-07-13)
+
+
+### 🚀 New Features
+
+* adjust code ([e465dea](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/e465dea3664f68cb307f9a5dd18c353528f1f0c0))
+* adjust code ([52d790e](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/52d790e60999e93b119da20d73478a3b25a602ee))
+
 ## [2.9.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.8.0...v2.9.0) (2026-07-11)
 
 

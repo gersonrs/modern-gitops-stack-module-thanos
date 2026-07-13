@@ -22,6 +22,21 @@ locals {
           limits   = { for k, v in var.resources.redis.limits : k => v if v != null }
         }
       }
+      # Istio ambient mode tunnels mesh traffic between pods over HBONE on
+      # port 15008. NetworkPolicy is enforced on the host (outside the pod),
+      # so the redis chart's default NetworkPolicy (which only allows ingress
+      # on port 6379) blocks the HBONE-encapsulated connection from
+      # thanos-storegateway/query-frontend before it reaches the pod.
+      # See: https://istio.io/latest/docs/ambient/usage/networkpolicy/
+      networkPolicy = {
+        extraIngress = [
+          {
+            ports = [
+              { port = 15008, protocol = "TCP" }
+            ]
+          }
+        ]
+      }
     }
     thanos = {
 

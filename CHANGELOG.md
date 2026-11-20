@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.10.0...v3.0.0) (2026-11-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* provider major bumps and a stricter Terraform baseline; consumers must run `terraform init -upgrade`.
+
+### 🚀 New Features
+
+* upgrade charts, providers and Terraform baseline ([#24](https://github.com/gersonrs/modern-gitops-stack-module-thanos/issues/24)) ([a20c5a7](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/a20c5a75060b802a42e6f631d894d35cf973c81e))
+
 ## [2.10.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.9.0...v2.10.0) (2026-07-13)
 
 

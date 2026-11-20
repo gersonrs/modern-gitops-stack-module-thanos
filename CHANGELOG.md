@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v3.0.0...v3.0.1) (2026-11-20)
+
+
+### 🔥 Bug Fixes
+
+* allow bitnamilegacy images in the chart ([#26](https://github.com/gersonrs/modern-gitops-stack-module-thanos/issues/26)) ([fa1d267](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/fa1d2670dca27ac3575b9d8984b79baae2343d25))
+
 ## [3.0.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v2.10.0...v3.0.0) (2026-11-20)
 
 

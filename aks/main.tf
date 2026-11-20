@@ -1,5 +1,7 @@
 # This null_resource is required otherwise Terraform would try to read the resource group data and/or the storage 
 # account even if they were not created yet. 
+data "azurerm_subscription" "primary" {}
+
 resource "null_resource" "dependencies" {
   triggers = var.dependency_ids
 }
@@ -17,8 +19,8 @@ data "azurerm_resource_group" "node_resource_group" {
 data "azurerm_storage_container" "container" {
   count = local.use_managed_identity ? 1 : 0
 
-  name                 = var.metrics_storage.container
-  storage_account_name = var.metrics_storage.storage_account
+  name               = var.metrics_storage.container
+  storage_account_id = "${data.azurerm_subscription.primary.id}/resourceGroups/${data.azurerm_resource_group.node_resource_group[0].name}/providers/Microsoft.Storage/storageAccounts/${var.metrics_storage.storage_account}"
 
   depends_on = [
     resource.null_resource.dependencies
@@ -36,7 +38,7 @@ resource "azurerm_user_assigned_identity" "thanos" {
 resource "azurerm_role_assignment" "storage_contributor" {
   count = local.use_managed_identity ? 1 : 0
 
-  scope                = data.azurerm_storage_container.container[0].resource_manager_id
+  scope                = data.azurerm_storage_container.container[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_user_assigned_identity.thanos[0].principal_id
 }
@@ -48,12 +50,11 @@ resource "azurerm_federated_identity_credential" "thanos" {
     "compactor",
   ] : [])
 
-  name                = "thanos-${each.key}"
-  resource_group_name = data.azurerm_resource_group.node_resource_group[0].name
-  audience            = ["api://AzureADTokenExchange"]
-  issuer              = var.metrics_storage.managed_identity_oidc_issuer_url
-  parent_id           = azurerm_user_assigned_identity.thanos[0].id
-  subject             = "system:serviceaccount:thanos:thanos-${each.key}"
+  name                      = "thanos-${each.key}"
+  audience                  = ["api://AzureADTokenExchange"]
+  issuer                    = var.metrics_storage.managed_identity_oidc_issuer_url
+  user_assigned_identity_id = azurerm_user_assigned_identity.thanos[0].id
+  subject                   = "system:serviceaccount:thanos:thanos-${each.key}"
 }
 
 module "thanos" {

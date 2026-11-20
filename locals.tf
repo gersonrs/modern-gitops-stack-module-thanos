@@ -5,6 +5,11 @@ locals {
   # Possible values available here -> https://github.com/bitnami/charts/tree/master/bitnami/thanos/
   helm_values = [{
     redis = {
+      global = {
+        security = {
+          allowInsecureImages = true
+        }
+      }
       image = {
         repository = "bitnamilegacy/redis"
       }
@@ -39,7 +44,11 @@ locals {
       }
     }
     thanos = {
-
+      global = {
+        security = {
+          allowInsecureImages = true
+        }
+      }
       image = {
         repository = "bitnamilegacy/thanos"
       }

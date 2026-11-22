@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v3.0.1...v4.0.0) (2026-11-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* Redis jumps a major version. The chart keeps architecture, auth and master.persistence compatible, so the rendered objects are unchanged apart from the image.
+
+### 🚀 New Features
+
+* upgrade the Thanos redis dependency to Bitnami chart 28.3.12 ([#28](https://github.com/gersonrs/modern-gitops-stack-module-thanos/issues/28)) ([4f3bac3](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/4f3bac3cab5a2c0c4de4d68437ed9811858e3f5e))
+
 ## [3.0.1](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v3.0.0...v3.0.1) (2026-11-20)
 
 

@@ -38,13 +38,13 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- [[provider_null]] <<provider_null,null>> (~> 3.3)
+- [[provider_argocd]] <<provider_argocd,argocd>> (~> 7.18)
 
 - [[provider_random]] <<provider_random,random>> (~> 3.9)
 
-- [[provider_argocd]] <<provider_argocd,argocd>> (~> 7.18)
-
 - [[provider_utils]] <<provider_utils,utils>> (~> 2.7)
+
+- [[provider_null]] <<provider_null,null>> (~> 3.3)
 
 === Resources
 
@@ -116,7 +116,7 @@ Description: Override of target revision of the application chart.
 
 Type: `string`
 
-Default: `"v3.0.1"`
+Default: `"v4.0.0"`
 
 ==== [[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
 
@@ -406,7 +406,7 @@ Description: ID to pass other modules in order to refer to this module as a depe
 |[[input_target_revision]] <<input_target_revision,target_revision>>
 |Override of target revision of the application chart.
 |`string`
-|`"v3.0.1"`
+|`"v4.0.0"`
 |no
 
 |[[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>

@@ -10,8 +10,12 @@ locals {
           allowInsecureImages = true
         }
       }
+      # Bitnami no longer publishes versioned tags to the free registry: only
+      # `latest` and digests are available. Pin the digest so the deployment
+      # stays reproducible; it currently resolves to Redis 8.10.3.
       image = {
-        repository = "bitnamilegacy/redis"
+        repository = "bitnami/redis"
+        digest     = "sha256:59078af5aec997137eb95f34fed376487b471e05c9a244c2812a13598c434950"
       }
       architecture = "standalone"
       auth = {

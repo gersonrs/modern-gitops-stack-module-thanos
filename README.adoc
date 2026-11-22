@@ -5,7 +5,7 @@
 
 A https://modern-gitops-stack.io[Modern Gitops Stack] module to deploy and configure https://thanos.io[Thanos].
 
-The Thanos chart used by this module is shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions. 
+The Thanos chart used by this module is shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions.
 
 [cols="1,1,1",options="autowidth,header"]
 |===
@@ -15,7 +15,7 @@ The Thanos chart used by this module is shipped in this repository as well, in o
 
 *Since this module is meant to be instantiated using its variants, the usage documentation is available in each variant* ( xref:./aks/README.adoc[AKS] | xref:./eks/README.adoc[EKS] | xref:./kind/README.adoc[KinD] ).
 
-Below you will only find the technical reference automatically generated from the `*.tf` files on the root module. 
+Below you will only find the technical reference automatically generated from the `*.tf` files on the root module.
 
 == Technical Reference
 
@@ -38,13 +38,13 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- [[provider_random]] <<provider_random,random>> (~> 3.9)
+- [[provider_null]] <<provider_null,null>> (~> 3.3)
 
-- [[provider_utils]] <<provider_utils,utils>> (~> 2.7)
+- [[provider_random]] <<provider_random,random>> (~> 3.9)
 
 - [[provider_argocd]] <<provider_argocd,argocd>> (~> 7.18)
 
-- [[provider_null]] <<provider_null,null>> (~> 3.3)
+- [[provider_utils]] <<provider_utils,utils>> (~> 2.7)
 
 === Resources
 
@@ -319,7 +319,7 @@ The following outputs are exported:
 Description: ID to pass other modules in order to refer to this module as a dependency.
 // END_TF_DOCS
 
-=== Reference in table format 
+=== Reference in table format
 
 .Show tables
 [%collapsible]
@@ -342,10 +342,10 @@ Description: ID to pass other modules in order to refer to this module as a depe
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
+|[[provider_null]] <<provider_null,null>> |~> 3.3
 |[[provider_random]] <<provider_random,random>> |~> 3.9
 |[[provider_argocd]] <<provider_argocd,argocd>> |~> 7.18
 |[[provider_utils]] <<provider_utils,utils>> |~> 2.7
-|[[provider_null]] <<provider_null,null>> |~> 3.3
 |===
 
 = Resources

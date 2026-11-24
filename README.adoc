@@ -1,23 +1,80 @@
 = modern-gitops-stack-module-thanos
 // Document attributes to replace along the document
-:thanos-chart-version: 15.6.0
-:original-repo-url: https://github.com/bitnami/charts/tree/master/bitnami/thanos
+:thanos-chart-version: 15.14.1
+:redis-chart-version: 28.3.12
+:original-repo-url: https://github.com/bitnami/charts
 
-A https://modern-gitops-stack.io[Modern Gitops Stack] module to deploy and configure https://thanos.io[Thanos].
+A https://modern-gitops-stack.io[Modern GitOps Stack] module to deploy Thanos, which provides long-term, highly available Prometheus metrics storage.
 
-The Thanos chart used by this module is shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions.
+The charts used by this module are shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions.
 
 [cols="1,1,1",options="autowidth,header"]
 |===
 |Current Chart Version |Original Repository |Default Values
-|*{thanos-chart-version}* |{original-repo-url}[Chart] |https://artifacthub.io/packages/helm/bitnami/thanos/{thanos-chart-version}?modal=values[`values.yaml`]
+|*15.14.1* |https://github.com/bitnami/charts/tree/main/bitnami/thanos[thanos] |https://artifacthub.io/packages/helm/thanos/thanos/15.14.1?modal=values[`values.yaml`]
+|*28.3.12* |https://github.com/bitnami/charts/tree/main/bitnami/redis[redis] |https://artifacthub.io/packages/helm/redis/redis/28.3.12?modal=values[`values.yaml`]
 |===
 
-*Since this module is meant to be instantiated using its variants, the usage documentation is available in each variant* ( xref:./aks/README.adoc[AKS] | xref:./eks/README.adoc[EKS] | xref:./kind/README.adoc[KinD] ).
+== Usage
 
-Below you will only find the technical reference automatically generated from the `*.tf` files on the root module.
+This module can be declared by adding the following block to your Terraform configuration:
+
+[source,terraform]
+----
+module "thanos" {
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git?ref=<RELEASE>"
+
+  cluster_name   = local.cluster_name
+  base_domain    = local.base_domain
+  subdomain      = local.subdomain
+  cluster_issuer = local.cluster_issuer
+  app_autosync   = local.app_autosync
+
+  dependency_ids = {
+    argocd         = module.argocd.id
+    istio          = module.istio.id
+    cert-manager   = module.cert-manager.id
+    minio          = module.minio.id
+    keycloak       = module.keycloak.id
+    oidc           = module.oidc.id
+    crds_bootstrap = module.crds_bootstrap.id
+  }
+}
+----
+
+The application is deployed to the `thanos` namespace.
 
 == Technical Reference
+
+=== Dependencies
+
+==== `module.argocd.id`
+
+Argo CD applies the application.
+
+==== `module.istio.id`
+
+Thanos is exposed through the Istio gateway.
+
+==== `module.cert-manager.id`
+
+The Thanos certificate is issued by cert-manager.
+
+==== `module.minio.id`
+
+Thanos stores metrics in the MinIO bucket.
+
+==== `module.keycloak.id`
+
+Thanos uses Keycloak for authentication.
+
+==== `module.oidc.id`
+
+The OIDC client is created by the oidc module.
+
+==== `module.crds_bootstrap.id`
+
+Thanos ships ServiceMonitors, which need the Prometheus Operator CRDs.
 
 // BEGIN_TF_DOCS
 === Requirements

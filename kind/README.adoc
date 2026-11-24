@@ -1,152 +1,27 @@
-= KinD variant
+= modern-gitops-stack-module-thanos :: kind
 
-This folder contains the variant to use when deploying locally using a https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind[KinD] cluster and an S3 bucket deployed using the https://github.com/GersonRS/modern-gitops-stack-module-minio[MinIO] module of the https://modern-gitops-stack.io[Modern Gitops Stack].
+This variant of the <<thanos:ROOT:README.adoc[thanos module]>> Deploys Thanos on KinD, storing metrics in the in-cluster MinIO instance.
 
 == Usage
 
-This module can be declared by adding the following block on your Terraform configuration:
+Declare the variant directly; it calls the module in the parent directory:
 
 [source,terraform]
 ----
 module "thanos" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos//kind?ref=<RELEASE>"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=<RELEASE>"
 
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
-  cluster_issuer   = local.cluster_issuer
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
-
-  metrics_storage = {
-    bucket_name = local.minio_config.buckets.1.name
-    endpoint    = module.minio.endpoint
-    access_key  = local.minio_config.users.1.accessKey
-    secret_key  = local.minio_config.users.1.secretKey
-  }
-
-  thanos = {
-    oidc = module.oidc.oidc
-  }
+  cluster_name   = local.cluster_name
+  base_domain    = local.base_domain
+  subdomain      = local.subdomain
+  cluster_issuer = local.cluster_issuer
+  app_autosync   = local.app_autosync
 
   dependency_ids = {
-    argocd       = module.argocd_bootstrap.id
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    minio        = module.minio.id
-    keycloak     = module.keycloak.id
-    oidc         = module.oidc.id
+    argocd = module.argocd_bootstrap.id
   }
 }
 ----
-
-IMPORTANT: You are in charge of creating an S3 bucket for Thanos to store the archived metrics. We've decided to keep the creation of this bucket outside of this module, mainly because the persistence of the data should not be related to the instantiation of the module itself.
-
-TIP: Check the xref:ROOT:ROOT:tutorials/deploy_kind.adoc[KinD deployment example] to see how to create the S3 bucket using MinIO and to better understand the values passed on the example above.
-
-NOTE: Do not forget that the bucket configuration also needs to be passed to the module `kube-prometheus-stack`.
-
-If there is a need to configure something besides the common settings that we have provided, you can customize the chart's `values.yaml` by adding an Helm configuration as an HCL structure:
-
-[source,terraform]
-----
-module "thanos" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos//kind?ref=<RELEASE>"
-
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
-  cluster_issuer   = local.cluster_issuer
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
-
-  metrics_storage = {
-    bucket_name = local.minio_config.buckets.1.name
-    endpoint    = module.minio.endpoint
-    access_key  = local.minio_config.users.1.accessKey
-    secret_key  = local.minio_config.users.1.secretKey
-  }
-
-  thanos = {
-    oidc = module.oidc.oidc
-  }
-
-  helm_values = [{ # Note the curly brackets here
-    thanos = {
-      map = {
-        string = "string"
-        bool   = true
-      }
-      sequence = [
-        {
-          key1 = "value1"
-          key2 = "value2"
-        },
-        {
-          key1 = "value1"
-          key2 = "value2"
-        },
-      ]
-      sequence2 = [
-        "string1",
-        "string2"
-      ]
-    }
-  }]
-
-  dependency_ids = {
-    argocd       = module.argocd_bootstrap.id
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    minio        = module.minio.id
-    keycloak     = module.keycloak.id
-    oidc         = module.oidc.id
-  }
-}
-----
-
-=== OIDC
-
-NOTE: This module was developed with OIDC in mind.
-
-There is an OIDC proxy container deployed as a sidecar on each pod that has a web interface. Consequently, the `thanos` variable is expected to have a map `oidc` containing at least the Issuer URL, the Client ID, and the Client Secret.
-
-You can pass these values by pointing an output from another module (as above), or by defining them explicitly:
-
-[source,terraform]
-----
-module "thanos" {
-  ...
-  thanos = {
-    oidc = {
-      issuer_url    = "<URL>"
-      client_id     = "<ID>"
-      client_secret = "<SECRET>"
-    }
-  }
-  ...
-}
-----
-
-=== Resource Configuration
-
-Since the resource requirements are not the same on every deployment and because the consumed resources also influence the cost associated, we refrained from configuring default resource requirements for the components of Thanos. We did, however, set memory limits for some of the pods (`query`, `storegateway` and `compactor` all have a 1 GB memory limit). These values should be customized as you see fit, although there is not really a need in a test deployment.
-
-== Technical Reference
-
-=== Dependencies
-
-==== `module.argocd_bootstrap.id`
-
-Obviously, the module depends on an already running Argo CD in the cluster in order for the application to be created.
-
-==== `module.traefik.id` and `module.cert-manager.id`
-
-This module has multiple ingresses and consequently it must be deployed after the module `traefik` and `cert-manager`.
-
-==== `module.keycloak.id` and `module.oidc.id`
-
-When using Keycloak as an OIDC provider for the Longhorn Dashboard, you need to add Keycloak and the OIDC module as dependencies.
-
-==== `module.minio.id`
-
-This module requires a S3 bucket to store the metrics so it needs to be deployed after the module MinIO.
 
 // BEGIN_TF_DOCS
 === Requirements

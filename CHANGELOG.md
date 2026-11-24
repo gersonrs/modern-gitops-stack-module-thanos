@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v4.0.0...v5.0.0) (2026-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* enable the ServiceMonitor by default ([#30](https://github.com/gersonrs/modern-gitops-stack-module-thanos/issues/30))
+
+### 🚀 New Features
+
+* enable the ServiceMonitor by default ([#30](https://github.com/gersonrs/modern-gitops-stack-module-thanos/issues/30)) ([5f5a521](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/5f5a521dbc113c5d7bfc7182c70890f2f6e51ee2))
+
 ## [4.0.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v3.0.1...v4.0.0) (2026-11-22)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v5.0.0...v5.0.1) (2026-11-24)
+
+
+### 📚 Documentation
+
+* add usage and dependencies to the module documentation ([#32](https://github.com/gersonrs/modern-gitops-stack-module-thanos/issues/32)) ([97ad94c](https://github.com/gersonrs/modern-gitops-stack-module-thanos/commit/97ad94c2ce9bae102f322d6791ba93858f2ec1bb))
+
 ## [5.0.0](https://github.com/gersonrs/modern-gitops-stack-module-thanos/compare/v4.0.0...v5.0.0) (2026-11-24)
 
 
